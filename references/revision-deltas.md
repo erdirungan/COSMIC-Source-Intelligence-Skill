@@ -1,0 +1,3 @@
+# COMPARE_REVISIONS
+
+Specify two Git commits for the same repository and the applicable architecture/entity scope. Diff authoritative file manifests first. Derive added/removed/changed files, then changed technical entity IDs, attributes, association mappings, APIs and business concept proposals. Use stable IDs without revisions; put old/new revision and evidence on each delta. A rename is **candidate** until source/history or semantic identity proves it. Any index/source SHA mismatch or missing checkout prevents an exhaustive-comparison claim. Changed technical entities alone do not establish functional change or COSMIC Change CFP. Return `records` of type `revisionDelta`, coverage and unresolved questions.

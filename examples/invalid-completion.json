@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "1.0",
+  "operation": "EXTRACT_ENTITIES",
+  "batchId": "synthetic-invalid-001",
+  "repository": "demo-backend",
+  "sourceRevision": "EXAMPLE_SHA_NOT_REAL",
+  "scope": {
+    "module": "CommonBackend",
+    "pathPrefix": "common/entity/address"
+  },
+  "manifestAuthority": "PARTIAL_INDEX",
+  "manifest": [
+    {
+      "path": "common/entity/address/AddrEntity.java",
+      "classification": "ENTITY",
+      "inspectionStatus": "FULL"
+    },
+    {
+      "path": "common/entity/address/CityLangStandAloneEntity.java",
+      "classification": "UNCERTAIN",
+      "inspectionStatus": "NOT_INSPECTED"
+    },
+    {
+      "path": "common/entity/address/AddrTpEntity.java",
+      "classification": "ENTITY",
+      "inspectionStatus": "NOT_INSPECTED"
+    }
+  ],
+  "records": [
+    {
+      "kind": "technicalEntity",
+      "id": "repo:demo-backend|class:demo.address.AddrEntity",
+      "sourcePath": "common/entity/address/AddrEntity.java",
+      "fullyQualifiedName": "demo.address.AddrEntity",
+      "technicalType": "JPA entity",
+      "table": "addr",
+      "primaryKey": "addrId",
+      "inspectionStatus": "FULL",
+      "attributes": [
+        {
+          "name": "addrId",
+          "type": "Long",
+          "column": "addr_id",
+          "primaryKey": true,
+          "evidence": [
+            {
+              "repository": "demo-backend",
+              "path": "common/entity/address/AddrEntity.java",
+              "startLine": 5,
+              "endLine": 8,
+              "sourceRevision": "EXAMPLE_SHA_NOT_REAL",
+              "verification": "INFERRED",
+              "detail": "Synthetic example; not checked against source"
+            }
+          ]
+        }
+      ],
+      "relationships": [],
+      "evidence": [
+        {
+          "repository": "demo-backend",
+          "path": "common/entity/address/AddrEntity.java",
+          "startLine": 1,
+          "endLine": 10,
+          "sourceRevision": "EXAMPLE_SHA_NOT_REAL",
+          "verification": "INFERRED",
+          "detail": "Synthetic example only"
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "filesDiscovered": 3,
+    "filesInspectedFull": 1,
+    "filesInspectedPartial": 0,
+    "filesUninspected": 2,
+    "entityClassesDiscovered": 2,
+    "entityRecordsExtracted": 1,
+    "discoveryComplete": false,
+    "extractionComplete": true,
+    "relationshipResolutionComplete": false,
+    "businessMappingReviewed": false
+  },
+  "checkpoint": {
+    "completedPaths": [
+      "common/entity/address/AddrEntity.java"
+    ],
+    "remainingPaths": [
+      "common/entity/address/AddrTpEntity.java",
+      "common/entity/address/CityLangStandAloneEntity.java"
+    ],
+    "nextPaths": [
+      "common/entity/address/AddrTpEntity.java"
+    ],
+    "resumeInstructions": "Verify authoritative checkout manifest and continue with remaining files"
+  },
+  "unresolvedQuestions": [
+    "Is CityLangStandAloneEntity.java actually a JPA @Entity in this revision?"
+  ]
+}

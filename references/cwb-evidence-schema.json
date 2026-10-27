@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/cwb/cosmic-source-intelligence/evidence-v1.schema.json",
+  "title": "CWB source intelligence evidence batch v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "operation", "batchId", "repository", "sourceRevision", "scope", "manifestAuthority", "manifest", "records", "coverage", "checkpoint", "unresolvedQuestions"],
+  "properties": {
+    "schemaVersion": {"const": "1.0"},
+    "operation": {"enum": ["DISCOVER_ARCHITECTURE", "EXTRACT_ENTITIES", "TRACE_FUNCTIONAL_FLOW", "VALIDATE_EVIDENCE", "COMPARE_REVISIONS"]},
+    "batchId": {"type": "string", "minLength": 1},
+    "repository": {"type": "string", "minLength": 1},
+    "sourceRevision": {"type": "string", "minLength": 1},
+    "publishedSourceRevision": {"type": ["string", "null"]},
+    "scope": {"type": "object", "required": ["module", "pathPrefix"], "properties": {"module": {"type": "string"}, "pathPrefix": {"type": "string"}}, "additionalProperties": true},
+    "manifestAuthority": {"enum": ["CHECKOUT", "PARTIAL_INDEX", "UNKNOWN"]},
+    "manifest": {"type": "array", "items": {"$ref": "#/$defs/file"}},
+    "records": {"type": "array", "items": {"$ref": "#/$defs/record"}},
+    "coverage": {"$ref": "#/$defs/coverage"},
+    "checkpoint": {"type": "object", "required": ["completedPaths", "remainingPaths", "nextPaths", "resumeInstructions"], "properties": {"completedPaths": {"type": "array", "items": {"type": "string"}}, "remainingPaths": {"type": "array", "items": {"type": "string"}}, "nextPaths": {"type": "array", "items": {"type": "string"}}, "resumeInstructions": {"type": "string"}}, "additionalProperties": true},
+    "unresolvedQuestions": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "evidence": {"type": "object", "required": ["repository", "path", "startLine", "endLine", "sourceRevision", "verification"], "properties": {"repository": {"type": "string", "minLength": 1}, "path": {"type": "string", "minLength": 1}, "startLine": {"type": "integer", "minimum": 1}, "endLine": {"type": "integer", "minimum": 1}, "sourceRevision": {"type": "string", "minLength": 1}, "verification": {"enum": ["VERIFIED_SOURCE", "VERIFIED_INDEX", "INFERRED", "UNKNOWN"]}, "detail": {"type": "string"}}, "additionalProperties": false},
+    "file": {"type": "object", "required": ["path", "classification", "inspectionStatus"], "properties": {"path": {"type": "string", "minLength": 1}, "classification": {"enum": ["ENTITY", "MAPPED_SUPERCLASS", "EMBEDDABLE", "DTO", "ENUM", "OTHER", "UNCERTAIN"]}, "inspectionStatus": {"enum": ["NOT_INSPECTED", "PARTIAL", "FULL"]}, "classificationEvidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}}}, "additionalProperties": false},
+    "attribute": {"type": "object", "required": ["name", "type", "evidence"], "properties": {"name": {"type": "string", "minLength": 1}, "type": {"type": "string"}, "column": {"type": ["string", "null"]}, "primaryKey": {"type": "boolean"}, "nullable": {"type": ["boolean", "null"]}, "mapping": {"type": "string"}, "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidence"}}}, "additionalProperties": true},
+    "relationship": {"type": "object", "required": ["kind", "targetId", "resolution", "evidence"], "properties": {"kind": {"type": "string"}, "targetId": {"type": ["string", "null"]}, "resolution": {"enum": ["RESOLVED", "EXTERNAL", "UNRESOLVED"]}, "cardinality": {"type": ["string", "null"]}, "join": {"type": ["string", "null"]}, "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidence"}}}, "additionalProperties": true},
+    "record": {"type": "object", "required": ["kind", "id", "evidence"], "properties": {"kind": {"enum": ["technicalEntity", "businessConcept", "component", "interface", "dependency", "functionalFlow", "interaction", "attributeLineage", "revisionDelta"]}, "id": {"type": "string", "minLength": 1}, "sourcePath": {"type": "string"}, "fullyQualifiedName": {"type": "string"}, "technicalType": {"type": "string"}, "table": {"type": ["string", "null"]}, "primaryKey": {"type": ["string", "null"]}, "attributes": {"type": "array", "items": {"$ref": "#/$defs/attribute"}}, "relationships": {"type": "array", "items": {"$ref": "#/$defs/relationship"}}, "inspectionStatus": {"enum": ["NOT_INSPECTED", "PARTIAL", "FULL"]}, "candidateOOI": {"enum": ["YES", "NO", "UNCERTAIN"]}, "reviewStatus": {"enum": ["PROPOSED", "REVIEW_REQUIRED"]}, "mappedTechnicalIds": {"type": "array", "items": {"type": "string"}}, "supersedes": {"type": "string"}, "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidence"}}}, "additionalProperties": true},
+    "coverage": {"type": "object", "required": ["filesDiscovered", "filesInspectedFull", "filesInspectedPartial", "filesUninspected", "entityClassesDiscovered", "entityRecordsExtracted", "discoveryComplete", "extractionComplete", "relationshipResolutionComplete", "businessMappingReviewed"], "properties": {"filesDiscovered": {"type": ["integer", "null"], "minimum": 0}, "filesInspectedFull": {"type": ["integer", "null"], "minimum": 0}, "filesInspectedPartial": {"type": ["integer", "null"], "minimum": 0}, "filesUninspected": {"type": ["integer", "null"], "minimum": 0}, "entityClassesDiscovered": {"type": ["integer", "null"], "minimum": 0}, "entityRecordsExtracted": {"type": ["integer", "null"], "minimum": 0}, "discoveryComplete": {"type": "boolean"}, "extractionComplete": {"type": "boolean"}, "relationshipResolutionComplete": {"type": "boolean"}, "businessMappingReviewed": {"type": "boolean"}}, "additionalProperties": true}
+  }
+}
